@@ -93,26 +93,26 @@ const MENU = [
 export default function Navbar1() {
   const navRef = useRef(null);
   const panelRef = useRef(null);
+  const anchorRef = useRef(null);
   const [openKey, setOpenKey] = useState(null);
   const [drawer, setDrawer] = useState(false);
   const [accordionOpen, setAccordionOpen] = useState(null);
-  const [dropdownTop, setDropdownTop] = useState(0);
+  const [panelPos, setPanelPos] = useState({ top: 0, left: 0 });
 
-  useEffect(() => {
-    const updateTop = () => {
-      if (navRef.current) {
-        const r = navRef.current.getBoundingClientRect();
-        setDropdownTop(r.bottom + window.scrollY);
-      }
+  const placePanel = () => {
+    if (!anchorRef.current || !panelRef.current) return;
+    const r = anchorRef.current.getBoundingClientRect();
+    const desired = {
+      top: r.bottom + window.scrollY,
+      left: r.left + window.scrollX
     };
-    updateTop();
-    window.addEventListener("resize", updateTop, { passive: true });
-    window.addEventListener("scroll", updateTop, { passive: true });
-    return () => {
-      window.removeEventListener("resize", updateTop);
-      window.removeEventListener("scroll", updateTop);
-    };
-  }, []);
+    const panelW = panelRef.current.offsetWidth || 320;
+    const vw = window.innerWidth;
+    const pad = 8;
+    const maxLeft = vw - panelW - pad;
+    const clampedLeft = Math.max(pad, Math.min(desired.left, maxLeft));
+    setPanelPos({ top: desired.top, left: clampedLeft });
+  };
 
   useEffect(() => {
     const onToggle = () => setDrawer((v) => !v);
@@ -152,7 +152,27 @@ export default function Navbar1() {
     return () => document.body.classList.remove("drawer-open");
   }, [drawer]);
 
+  useEffect(() => {
+    if (openKey !== null) {
+      placePanel();
+      const onResize = () => placePanel();
+      const onScroll = () => placePanel();
+      window.addEventListener("resize", onResize, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => {
+        window.removeEventListener("resize", onResize);
+        window.removeEventListener("scroll", onScroll);
+      };
+    }
+  }, [openKey]);
+
   const isDropdown = (m) => Array.isArray(m.items);
+
+  const openFromTarget = (i, target) => {
+    anchorRef.current = target;
+    setOpenKey(i);
+    setTimeout(placePanel, 0);
+  };
 
   return (
     <div className="nav1" ref={navRef}>
@@ -164,16 +184,21 @@ export default function Navbar1() {
                 {isDropdown(m) ? (
                   <button
                     className="nav1-link bare"
-                    onMouseEnter={() => setOpenKey(i)}
-                    onFocus={() => setOpenKey(i)}
-                    onClick={() => setOpenKey(openKey === i ? null : i)}
+                    onMouseEnter={(e) => openFromTarget(i, e.currentTarget)}
+                    onFocus={(e) => openFromTarget(i, e.currentTarget)}
+                    onClick={(e) => (openKey === i ? setOpenKey(null) : openFromTarget(i, e.currentTarget))}
                     aria-expanded={openKey === i}
                   >
                     <span className="nav1-text">{m.label}</span>
                     <span className={`arrow ${openKey === i ? "up" : ""}`}>▾</span>
                   </button>
                 ) : (
-                  <a className="nav1-link bare" href={m.href}>
+                  <a
+                    className="nav1-link bare"
+                    href={m.href}
+                    onMouseEnter={() => setOpenKey(null)}
+                    onFocus={() => setOpenKey(null)}
+                  >
                     <span className="nav1-text">{m.label}</span>
                   </a>
                 )}
@@ -187,11 +212,11 @@ export default function Navbar1() {
         <div
           ref={panelRef}
           className="dropdown-panel"
-          style={{ top: dropdownTop }}
+          style={{ top: `${panelPos.top}px`, left: `${panelPos.left}px` }}
           onMouseEnter={() => setOpenKey(openKey)}
           onMouseLeave={() => setOpenKey(null)}
         >
-          <div className={`dropdown-grid ${MENU[openKey].items.length > 8 ? "wide" : ""}`}>
+          <div className="dropdown-grid">
             {MENU[openKey].items.map((it) => (
               <a key={it.label} href={it.href} className="dropdown-item">
                 {it.label}

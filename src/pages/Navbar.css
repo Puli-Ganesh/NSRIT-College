@@ -45,10 +45,18 @@
   position: relative;
 }
 
+.logo-pair {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  line-height: 0;
+  margin: 0 auto;
+}
+
 .navbar-logo {
   height: 60px;
-  width: 75% !important;
-  margin: 0 auto;
+  width: auto;
+  display: block;
   object-fit: contain;
 }
 
@@ -82,10 +90,20 @@
     justify-content: space-between;
     padding: 10px 14px;
   }
-  .navbar-logo {
-    height: 42px;
-    width: auto;
+  .logo-pair {
     margin: 0;
+  }
+  .navbar-logo {
+  height: 60px;
+  width: 80%;
+  display: block;
+  object-fit: contain;
+}
+  .navbar-logo.main {
+    height: 42px;
+  }
+  .navbar-logo.logo1 {
+    display: none;
   }
   .hamburger-btn {
     display: block;

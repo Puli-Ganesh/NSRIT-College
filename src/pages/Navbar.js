@@ -18,7 +18,10 @@ export default function Navbar() {
         </div>
       </div>
       <div className="navbar-bottom">
-        <img src="/images/main-logo.png" alt="logo" className="navbar-logo" />
+        <div className="logo-pair">
+          <img src="/images/main-logo.png" alt="logo" className="navbar-logo main" />
+          <img src="/images/logo1.png" alt="logo" className="navbar-logo logo1" />
+        </div>
         <button className="hamburger-btn" aria-label="Open menu" onClick={toggleDrawer}>
           <span />
           <span />
