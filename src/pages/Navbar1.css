@@ -1,0 +1,130 @@
+/* D:\college\src\pages\Navbar1.css */
+.nav1 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav1-top {
+  background: #0b5ed7;
+  color: #ffffff;
+  width: 100%;
+  position: relative;
+  z-index: 100;
+  overflow: visible;
+}
+
+.nav1-menu {
+  margin: 0;
+  padding: 0 12px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.nav1-item {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.nav1-item > a,
+.nav1-item > button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #ffffff;
+  font: inherit;
+  padding: 8px 7px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav1-item > a:hover,
+.nav1-item > button:hover {
+  text-decoration: underline;
+}
+
+.arrow {
+  font-size: 12px;
+  line-height: 1;
+  transition: transform 0.2s linear;
+}
+
+.has-dropdown:hover .arrow,
+.has-dropdown:focus-within .arrow {
+  transform: rotate(180deg);
+}
+
+.has-dropdown .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #0b5ed7;
+  color: #ffffff;
+  min-width: 260px;
+  z-index: 9999;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.has-dropdown:hover .dropdown,
+.has-dropdown:focus-within .dropdown {
+  display: grid;
+}
+
+.dropdown {
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  grid-template-columns: 1fr;
+}
+
+.dropdown-wide {
+  min-width: 520px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.dropdown li a {
+  display: block;
+  padding: 10px 14px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dropdown li a:hover {
+  background: rgba(255,255,255,0.12);
+  text-decoration: none;
+}
+
+.nav1-bottom {
+  width: 100%;
+  background: maroon;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.ticker {
+  width: 100%;
+  position: relative;
+  height: 36px;
+}
+
+.ticker__track {
+  position: absolute;
+  white-space: nowrap;
+  will-change: transform;
+  padding: 8px 0;
+  animation: ticker-move 18s linear infinite;
+}
+
+@keyframes ticker-move {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
