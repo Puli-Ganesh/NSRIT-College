@@ -127,9 +127,9 @@ export default function HomePage() {
       </section> */}
 
 
-      <div className="banner">
+      {/*<div className="banner">
         <img src="/images/main-banner.jpg" alt="Main Banner" className="banner-img" />
-      </div>
+      </div> */}
     </div>
   );
 }

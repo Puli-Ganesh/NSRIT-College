@@ -20,7 +20,7 @@ export default function Navbar() {
       <div className="navbar-bottom">
         <div className="logo-pair">
           <img src="/images/main-logo.png" alt="logo" className="navbar-logo main" />
-          <img src="/images/logo1.png" alt="logo" className="navbar-logo logo1" />
+          {/*<img src="/images/logo1.png" alt="logo" className="navbar-logo logo1" /> */}
         </div>
         <button className="hamburger-btn" aria-label="Open menu" onClick={toggleDrawer}>
           <span />
