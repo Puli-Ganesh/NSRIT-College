@@ -115,6 +115,12 @@ export default function Navbar1() {
   }, []);
 
   useEffect(() => {
+    const onToggle = () => setDrawer((v) => !v);
+    window.addEventListener("nav-drawer-toggle", onToggle);
+    return () => window.removeEventListener("nav-drawer-toggle", onToggle);
+  }, []);
+
+  useEffect(() => {
     const closeOnEsc = (e) => {
       if (e.key === "Escape") {
         setOpenKey(null);
@@ -152,9 +158,6 @@ export default function Navbar1() {
     <div className="nav1" ref={navRef}>
       <div className="nav1-top">
         <div className="nav1-bar">
-          <button className={`nav1-toggle ${drawer ? "open" : ""}`} onClick={() => setDrawer((v) => !v)}>
-            <span /><span /><span />
-          </button>
           <ul className="nav1-menu">
             {MENU.map((m, i) => (
               <li key={m.label} className={`nav1-item ${isDropdown(m) ? "has-dd" : ""}`}>
