@@ -14,7 +14,7 @@ export default function HomePage() {
       <Navbar1 />
 
 
-      <section className="home1-hero-new-home">
+      {/*<section className="home1-hero-new-home">
         <div className="home1-hero-frame-new-home">
           <Swiper
             className="home1-hero-swiper-new-home"
@@ -26,22 +26,22 @@ export default function HomePage() {
           >
             <SwiperSlide>
               <div className="home1-hero-slide-new-home">
-                <img src="/images/slide3.png" alt="Main Banner" loading="eager" />
+                <img src="/images/slide7.png" alt="Main Banner" loading="eager" />
               </div>
             </SwiperSlide>
             <SwiperSlide>
               <div className="home1-hero-slide-new-home">
-                <img src="/images/slide2.png" alt="Men Banner" loading="lazy" decoding="async" />
+                <img src="/images/slide6.png" alt="Men Banner" loading="lazy" decoding="async" />
               </div>
             </SwiperSlide>
             <SwiperSlide>
               <div className="home1-hero-slide-new-home">
-                <img src="/images/slide1.png" alt="Women Banner" loading="lazy" decoding="async" />
+                <img src="/images/slide5.png" alt="Women Banner" loading="lazy" decoding="async" />
               </div>
             </SwiperSlide>
           </Swiper>
         </div>
-      </section>
+      </section> */}
 
 
 
@@ -127,9 +127,9 @@ export default function HomePage() {
       </section> */}
 
 
-      {/*<div className="banner">
-        <img src="/images/main-banner.jpg" alt="Main Banner" className="banner-img" />
-      </div> */}
+      <div className="banner">
+        <img src="/images/slide3.png" alt="Main Banner" className="banner-img" />
+      </div> 
     </div>
   );
 }
