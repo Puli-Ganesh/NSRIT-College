@@ -1,4 +1,20 @@
 /* D:\college\src\pages\Navbar1.css */
+:root {
+  --blue: #0b5ed7;
+  --white: #ffffff;
+  --maroon: maroon;
+  --shadow: 0 8px 24px rgba(0, 0, 0, .25);
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body.drawer-open {
+  overflow: hidden;
+}
+
 .nav1 {
   width: 100%;
   display: flex;
@@ -6,24 +22,92 @@
 }
 
 .nav1-top {
-  background: #0b5ed7;
-  color: #ffffff;
+  background: var(--blue);
+  color: var(--white);
   width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav1-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 8px;
   position: relative;
-  z-index: 100;
-  overflow: visible;
+}
+
+.nav1-toggle {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 30px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav1-toggle span {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  transition: transform .2s ease, opacity .2s ease, top .2s ease;
+}
+
+.nav1-toggle span:nth-child(1) {
+  top: 9px;
+}
+
+.nav1-toggle span:nth-child(2) {
+  top: 14px;
+}
+
+.nav1-toggle span:nth-child(3) {
+  top: 19px;
+}
+
+.nav1-toggle.open span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 14px;
+}
+
+.nav1-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav1-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 14px;
 }
 
 .nav1-menu {
   margin: 0;
-  padding: 0 12px;
+  padding: 0 4px;
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 10px;
   flex-wrap: nowrap;
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: hidden;
   white-space: nowrap;
+  width: 100%;
+  max-width: 1280px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav1-menu::-webkit-scrollbar {
+  display: none;
 }
 
 .nav1-item {
@@ -31,83 +115,91 @@
   flex: 0 0 auto;
 }
 
-.nav1-item > a,
-.nav1-item > button {
+.nav1-link {
   background: transparent;
   border: 0;
   outline: 0;
-  color: #ffffff;
+  color: var(--white);
   font: inherit;
-  padding: 8px 7px;
+  padding: 0;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
 }
 
-.nav1-item > a:hover,
-.nav1-item > button:hover {
+.nav1-link.bare {
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.nav1-link:hover .nav1-text {
   text-decoration: underline;
+}
+
+.nav1-text {
+  font-weight: 500;
+  font-size: clamp(12px, 1.35vw, 15px);
+  letter-spacing: .2px;
 }
 
 .arrow {
   font-size: 12px;
   line-height: 1;
-  transition: transform 0.2s linear;
+  transition: transform .2s linear;
+  flex: 0 0 auto;
 }
 
-.has-dropdown:hover .arrow,
-.has-dropdown:focus-within .arrow {
+.arrow.up {
   transform: rotate(180deg);
 }
 
-.has-dropdown .dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #0b5ed7;
-  color: #ffffff;
-  min-width: 260px;
-  z-index: 9999;
-  border-top: 1px solid rgba(255,255,255,0.2);
+.dropdown-panel {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 100vw - 16px);
+  background: var(--blue);
+  color: var(--white);
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  box-shadow: var(--shadow);
+  z-index: 1200;
+  padding: 10px;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
 }
 
-.has-dropdown:hover .dropdown,
-.has-dropdown:focus-within .dropdown {
+.dropdown-grid {
   display: grid;
-}
-
-.dropdown {
-  margin: 0;
-  padding: 8px 0;
-  list-style: none;
   grid-template-columns: 1fr;
+  gap: 6px;
 }
 
-.dropdown-wide {
-  min-width: 520px;
-  grid-template-columns: 1fr 1fr;
+.dropdown-grid.wide {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
 }
 
-.dropdown li a {
+.dropdown-item {
   display: block;
-  padding: 10px 14px;
-  color: #ffffff;
+  padding: 10px 6px;
+  color: var(--white);
   text-decoration: none;
+  border-radius: 0;
 }
 
-.dropdown li a:hover {
-  background: rgba(255,255,255,0.12);
-  text-decoration: none;
+.dropdown-item:hover {
+  text-decoration: underline;
 }
 
 .nav1-bottom {
   width: 100%;
-  background: maroon;
-  color: #ffffff;
+  background: var(--maroon);
+  color: var(--white);
   overflow: hidden;
+  position: relative;
+  z-index: 900;
 }
 
 .ticker {
@@ -125,6 +217,136 @@
 }
 
 @keyframes ticker-move {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.nav1-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 86vw;
+  max-width: 380px;
+  height: 100vh;
+  background: rgba(0, 0, 0, .96);
+  color: var(--white);
+  padding: 18px;
+  z-index: 1400;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-left: 1px solid rgba(255, 255, 255, .06);
+  box-shadow: -16px 0 40px rgba(0, 0, 0, .45);
+  animation: slideIn .24s ease both;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.drawer-close {
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+.drawer-content {
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.drawer-link {
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 700;
+  padding: 10px 0;
+}
+
+.acc {
+  border-radius: 0;
+}
+
+.acc-head {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.acc-head.open {
+  text-decoration: underline;
+}
+
+.acc-arrow {
+  font-size: 12px;
+}
+
+.acc-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: 6px 0 10px;
+}
+
+.acc-link {
+  color: var(--white);
+  text-decoration: none;
+  padding: 8px 0;
+}
+
+.acc-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .nav1-toggle {
+    display: flex;
+  }
+
+  .nav1-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  .dropdown-panel::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .dropdown-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .3);
+    border-radius: 6px;
+  }
 }

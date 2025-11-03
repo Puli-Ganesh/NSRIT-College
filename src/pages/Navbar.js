@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <div className="navbar-container">
       <div className="navbar-top">
-        <div className="navbar-top-left">NSRIT</div>
+        <div className="navbar-top-left">NSRIET</div>
         <div className="navbar-top-right">
           <span>News Bulletin</span>
           <span className="divider">|</span>
@@ -13,7 +13,7 @@ export default function Navbar() {
         </div>
       </div>
       <div className="navbar-bottom">
-        <img src="/images/logo1.png" alt="logo" className="navbar-logo" />
+        <img src="/images/main-logo.png" alt="logo" className="navbar-logo" />
       </div>
     </div>
   );
