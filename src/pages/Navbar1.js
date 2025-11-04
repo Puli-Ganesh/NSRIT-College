@@ -44,7 +44,7 @@ const MENU = [
       { label: "Best Practices", href: "#best-practices" },
       { label: "LMS", href: "#lms" },
       { label: "Academic Calendar", href: "#calendar" },
-      { label: "Knowledge Resource Center (Library)", href: "#library" },
+      { label: "Knowledge Resource Center", href: "#library" },
       
     ]
   },
