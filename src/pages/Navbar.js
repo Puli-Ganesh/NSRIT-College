@@ -8,10 +8,10 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar-container">
-      <div className="navbar-top">
-        <div className="navbar-top-left">NSRIET</div>
-        <div className="navbar-top-right">
+    <div className="nav-header-container">
+      <div className="nav-header-top">
+        <div className="nav-header-left">NSRIET</div>
+        <div className="nav-header-right">
           <span>Circular Notification</span>
           <span className="divider">|</span>
           <span>Feedback</span>
@@ -21,11 +21,11 @@ export default function Navbar() {
           <span>Career Opportunities</span>
         </div>
       </div>
-      <div className="navbar-bottom">
-        <div className="logo-pair">
-          <img src="/images/main-logo1.png" alt="logo" className="navbar-logo main" />
+      <div className="nav-header-bottom">
+        <div className="nav-header-logo">
+          <img src="/images/main-logo1.png" alt="logo" className="nav-logo" />
         </div>
-        <button className="hamburger-btn" aria-label="Open menu" onClick={toggleDrawer}>
+        <button className="nav-hamburger" aria-label="Open menu" onClick={toggleDrawer}>
           <span />
           <span />
           <span />

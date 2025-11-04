@@ -272,7 +272,7 @@ export default function Navbar1() {
       <div className="nav1-bottom">
         <div className="ticker">
           <div className="ticker__track">
-            204 - 2025: 669 placement offers | 2025 - 2026 (As on date) 216 offers. Delphi TVS: 105, Wheels India: 24, TAFE: 11, Schneider: 09, Valeo India Pvt. Ltd.: 25, Yazaki India Pvt. Ltd.: 24, Swelect: 18 (All come with pre-placement offers + Stipend ranging from INR 15000++)
+            Coming soon National Level Technical Fest - TechSurge 2025
           </div>
         </div>
       </div>
