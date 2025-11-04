@@ -128,7 +128,7 @@ export default function HomePage() {
 
 
       <div className="banner">
-        <img src="/images/slide3.png" alt="Main Banner" className="banner-img" />
+        <img src="/images/slide8.png" alt="Main Banner" className="banner-img" />
       </div> 
     </div>
   );
