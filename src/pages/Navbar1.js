@@ -48,7 +48,7 @@ const MENU = [
       
     ]
   },
-  { label: "IIC", href: "#research" },
+  { label: "Institute Innovation Council", href: "#research" },
   { label: "Industry Connect & Collaborations", href: "#arr" },
   {
     label: "CDC",
