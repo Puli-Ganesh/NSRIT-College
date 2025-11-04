@@ -29,13 +29,7 @@ const MENU = [
   },
   {
     label: "Academics",
-    items: [
-      { label: "Outcome Based Education (OBE)", href: "#obe" },
-      { label: "Best Practices", href: "#best-practices" },
-      { label: "LMS", href: "#lms" },
-      { label: "Academic Calendar", href: "#calendar" },
-      { label: "Knowledge Resource Center (Library)", href: "#library" },
-      {
+    items: [{
         label: "Programs",
         href: "#programs",
         subitems: [
@@ -45,7 +39,13 @@ const MENU = [
           { label: "Electrical & Electronics Engineering", href: "#eee" },
           { label: "Mechanical Engineering", href: "#mech" }
         ]
-      }
+      },
+      { label: "Competency Based Curriculum", href: "#obe" },
+      { label: "Best Practices", href: "#best-practices" },
+      { label: "LMS", href: "#lms" },
+      { label: "Academic Calendar", href: "#calendar" },
+      { label: "Knowledge Resource Center (Library)", href: "#library" },
+      
     ]
   },
   { label: "IIC", href: "#research" },
@@ -64,7 +64,7 @@ const MENU = [
       { label: "Contact", href: "#contact-cdc" }
     ]
   },
-  {
+  /*{
     label: "National & International Initiatives",
     items: [
       { label: "NEP Implementation", href: "#nep" },
@@ -80,7 +80,7 @@ const MENU = [
       { label: "PMKVY Special Projects", href: "#pmkvy" },
       { label: "Photo Collage", href: "#collage" }
     ]
-  },
+  }, */
   {
     label: "Quick Links",
     items: [
