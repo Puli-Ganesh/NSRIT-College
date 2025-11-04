@@ -8,7 +8,7 @@ const MENU = [
     items: [
       { label: "Management", href: "#management" },
       { label: "Leadership", href: "#leadership" },
-      { label: "Nadimpalli LLP", href: "#aves" }
+      { label: "Nadimpalli Informatics LLP", href: "#aves" }
     ]
   },
   {
@@ -22,7 +22,7 @@ const MENU = [
   {
     label: "Admissions",
     items: [
-      { label: "Why NSRIET", href: "#why-nsrit" },
+      { label: "Why NSRIET ?", href: "#why-nsrit" },
       { label: "Undergraduate Programs", href: "#ug" },
       { label: "Postgraduate Programs", href: "#pg" }
     ]
