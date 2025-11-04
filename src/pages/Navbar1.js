@@ -1,4 +1,3 @@
-// D:\college\src\pages\Navbar1.js
 import React, { useEffect, useRef, useState } from "react";
 import "./Navbar1.css";
 
@@ -7,11 +6,9 @@ const MENU = [
   {
     label: "About",
     items: [
-      { label: "History", href: "#history" },
       { label: "Management", href: "#management" },
       { label: "Leadership", href: "#leadership" },
-      { label: "Aishwarya Viganan Educations Society", href: "#aves" },
-      { label: "Trans-Disciplinary Educational Framework", href: "#tdef" }
+      { label: "Nadimpalli LLP", href: "#aves" }
     ]
   },
   {
@@ -19,37 +16,46 @@ const MENU = [
     items: [
       { label: "Organogram", href: "#organogram" },
       { label: "Governing Body", href: "#governing-body" },
-      { label: "Academic Council", href: "#academic-council" }
+      { label: "Institutional Committees", href: "#academic-council" }
     ]
   },
   {
     label: "Admissions",
     items: [
-      { label: "Why NSRIT", href: "#why-nsrit" },
-      { label: "Diploma Programs", href: "#diploma" },
+      { label: "Why NSRIET", href: "#why-nsrit" },
       { label: "Undergraduate Programs", href: "#ug" },
-      { label: "Postgraduate Programs", href: "#pg" },
-      { label: "Academic Merit Scholarship Schemes", href: "#scholarships" }
+      { label: "Postgraduate Programs", href: "#pg" }
     ]
   },
   {
     label: "Academics",
     items: [
-      { label: "Programs", href: "#programs" },
-      { label: "Outcome Based Education (OBE)", href: "#obe" },
-      { label: "Best Practices", href: "#best-practices" },
-      { label: "LMS", href: "#lms" },
-      { label: "Academic Calendar", href: "#calendar" },
-      { label: "Knowledge Resource Center (Library)", href: "#library" }
+      {
+        label: "Programs",
+        href: "#programs",
+        subitems: [
+          { label: "Computer Science & Engineering", href: "#cse" },
+          { label: "CSE (AI & ML)", href: "#cse-aiml" },
+          { label: "Electronics & Communication Engineering", href: "#ece" },
+          { label: "Electrical & Electronics Engineering", href: "#eee" },
+          { label: "Mechanical Engineering", href: "#mech" }
+        ]
+      }
     ]
   },
-  { label: "Research", href: "#research" },
+  { label: "IIC", href: "#research" },
   { label: "Accreditation, Ranking & Recognition", href: "#arr" },
   {
     label: "CDC",
     items: [
       { label: "About CDC", href: "#about-cdc" },
+      { label: "Career Guidance & Counseling", href: "#career-guidance" },
+      { label: "Skill Development & Training", href: "#skill-development" },
+      { label: "Internship & Apprenticeships", href: "#internships" },
       { label: "Placements", href: "#placements" },
+      { label: "Higher Education Support", href: "#higher-education" },
+      { label: "Resources & Support", href: "#resources-support" },
+      { label: "Announcements & Events", href: "#announcements" },
       { label: "Contact", href: "#contact-cdc" }
     ]
   },
@@ -73,19 +79,11 @@ const MENU = [
   {
     label: "Quick Links",
     items: [
-      { label: "Office of CoE & Autonomous", href: "#coe" },
-      { label: "Institute Innovation Council", href: "#iic" },
-      { label: "Institution Industry Cell", href: "#iicell" },
-      { label: "Alumni", href: "#alumni" },
-      { label: "Feedback", href: "#feedback" },
       { label: "Campus Life", href: "#campus-life" },
-      { label: "Account Help Desk", href: "#account-help" },
-      { label: "Mandatory Committee", href: "#mandatory-committee" },
+      { label: "Clubs & Societies", href: "#clubs-societies" },
       { label: "Institution Policy Documents", href: "#policy-docs" },
-      { label: "Mandatory Disclosures", href: "#mandatory-disclosures" },
-      { label: "Food Safety Certificate", href: "#food-safety" },
-      { label: "Sri Prasunna Law College", href: "#law-college" },
-      { label: "Initiatives towards SDGs", href: "#sdgs" }
+      { label: "NSS", href: "#nss" },
+      { label: "Partner Institution", href: "#partner-institution" }
     ]
   }
 ];
@@ -98,14 +96,12 @@ export default function Navbar1() {
   const [drawer, setDrawer] = useState(false);
   const [accordionOpen, setAccordionOpen] = useState(null);
   const [panelPos, setPanelPos] = useState({ top: 0, left: 0 });
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   const placePanel = () => {
     if (!anchorRef.current || !panelRef.current) return;
     const r = anchorRef.current.getBoundingClientRect();
-    const desired = {
-      top: r.bottom + window.scrollY,
-      left: r.left + window.scrollX
-    };
+    const desired = { top: r.bottom + window.scrollY, left: r.left + window.scrollX };
     const panelW = panelRef.current.offsetWidth || 320;
     const vw = window.innerWidth;
     const pad = 8;
@@ -126,6 +122,7 @@ export default function Navbar1() {
         setOpenKey(null);
         setAccordionOpen(null);
         setDrawer(false);
+        setHoveredItem(null);
       }
     };
     document.addEventListener("keydown", closeOnEsc);
@@ -140,6 +137,7 @@ export default function Navbar1() {
         !navRef.current.contains(e.target)
       ) {
         setOpenKey(null);
+        setHoveredItem(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -154,6 +152,7 @@ export default function Navbar1() {
 
   useEffect(() => {
     if (openKey !== null) {
+      setHoveredItem(null);
       placePanel();
       const onResize = () => placePanel();
       const onScroll = () => placePanel();
@@ -167,12 +166,13 @@ export default function Navbar1() {
   }, [openKey]);
 
   const isDropdown = (m) => Array.isArray(m.items);
-
   const openFromTarget = (i, target) => {
     anchorRef.current = target;
     setOpenKey(i);
     setTimeout(placePanel, 0);
   };
+  const menuHasSecondLevel = (idx) =>
+    (MENU[idx]?.items || []).some((it) => Array.isArray(it.subitems));
 
   return (
     <div className="nav1" ref={navRef}>
@@ -196,8 +196,8 @@ export default function Navbar1() {
                   <a
                     className="nav1-link bare"
                     href={m.href}
-                    onMouseEnter={() => setOpenKey(null)}
-                    onFocus={() => setOpenKey(null)}
+                    onMouseEnter={() => { setOpenKey(null); setHoveredItem(null); }}
+                    onFocus={() => { setOpenKey(null); setHoveredItem(null); }}
                   >
                     <span className="nav1-text">{m.label}</span>
                   </a>
@@ -214,15 +214,58 @@ export default function Navbar1() {
           className="dropdown-panel"
           style={{ top: `${panelPos.top}px`, left: `${panelPos.left}px` }}
           onMouseEnter={() => setOpenKey(openKey)}
-          onMouseLeave={() => setOpenKey(null)}
+          onMouseLeave={() => { setOpenKey(null); setHoveredItem(null); }}
         >
-          <div className="dropdown-grid">
-            {MENU[openKey].items.map((it) => (
-              <a key={it.label} href={it.href} className="dropdown-item">
-                {it.label}
-              </a>
-            ))}
-          </div>
+          {menuHasSecondLevel(openKey) ? (
+            hoveredItem === null ? (
+              <div className="dropdown-grid">
+                {MENU[openKey].items.map((it) => (
+                  <a
+                    key={it.label}
+                    href={it.href}
+                    className="dropdown-item"
+                    onMouseEnter={() => setHoveredItem(it.label)}
+                  >
+                    {it.label}
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div className="dropdown-two-col">
+                <ul className="col-left">
+                  {MENU[openKey].items.map((it) => (
+                    <li key={it.label}>
+                      <a
+                        href={it.href}
+                        className="dropdown-item"
+                        onMouseEnter={() => setHoveredItem(it.label)}
+                      >
+                        {it.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div className="col-right">
+                  {MENU[openKey].items
+                    .filter((it) => it.label === hoveredItem)
+                    .flatMap((it) => it.subitems || [])
+                    .map((s) => (
+                      <a key={s.label} href={s.href} className="dropdown-item">
+                        {s.label}
+                      </a>
+                    ))}
+                </div>
+              </div>
+            )
+          ) : (
+            <div className="dropdown-grid">
+              {MENU[openKey].items.map((it) => (
+                <a key={it.label} href={it.href} className="dropdown-item">
+                  {it.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -253,11 +296,19 @@ export default function Navbar1() {
                   </button>
                   {accordionOpen === i && (
                     <div className="acc-body">
-                      {m.items.map((it) => (
-                        <a key={it.label} href={it.href} className="acc-link" onClick={() => setDrawer(false)}>
-                          {it.label}
-                        </a>
-                      ))}
+                      {m.items.map((it) =>
+                        it.subitems
+                          ? it.subitems.map((s) => (
+                              <a key={s.label} href={s.href} className="acc-link" onClick={() => setDrawer(false)}>
+                                {s.label}
+                              </a>
+                            ))
+                          : (
+                            <a key={it.label} href={it.href} className="acc-link" onClick={() => setDrawer(false)}>
+                              {it.label}
+                            </a>
+                          )
+                      )}
                     </div>
                   )}
                 </div>
