@@ -122,6 +122,8 @@ body.drawer-open {
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 90px);
   overflow-y: auto;
+  will-change: top, left, width;
+  transition: width .15s ease;
 }
 
 .dropdown-grid {
@@ -147,13 +149,28 @@ body.drawer-open {
 }
 
 .col-right {
-  display: grid;
+  display: none;
   grid-template-columns: 1fr;
   gap: 6px;
 }
 
+.dropdown-panel.supports-sub {
+  width: 320px;
+}
+
+.dropdown-panel.supports-sub.show-sub {
+  width: 560px;
+}
+
+.dropdown-panel.supports-sub.show-sub .col-right {
+  display: grid;
+}
+
 .dropdown-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   padding: 10px 6px;
   color: var(--white);
   text-decoration: none;
@@ -162,6 +179,14 @@ body.drawer-open {
 
 .dropdown-item:hover {
   text-decoration: underline;
+}
+
+.dropdown-item.active {
+  text-decoration: underline;
+}
+
+.dd-arrow {
+  font-size: 12px;
 }
 
 .nav1-bottom {
@@ -278,6 +303,11 @@ body.drawer-open {
   text-decoration: underline;
 }
 
+.acc-head.sub {
+  font-weight: 600;
+  padding: 10px 0;
+}
+
 .acc-arrow {
   font-size: 12px;
 }
@@ -287,6 +317,13 @@ body.drawer-open {
   grid-template-columns: 1fr;
   gap: 2px;
   padding: 6px 0 10px;
+}
+
+.acc-sub-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: 4px 0 8px 8px;
 }
 
 .acc-link {
@@ -306,6 +343,13 @@ body.drawer-open {
   .dropdown-two-col {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+  .dropdown-panel.supports-sub {
+    width: 92vw;
+    max-width: calc(100vw - 16px);
+  }
+  .dropdown-panel.supports-sub.show-sub {
+    width: 92vw;
   }
 }
 

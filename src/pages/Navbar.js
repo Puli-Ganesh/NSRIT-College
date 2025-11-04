@@ -14,6 +14,8 @@ export default function Navbar() {
         <div className="nav-header-right">
           <span>Circular Notification</span>
           <span className="divider">|</span>
+          <span>Upcoming Events</span>
+          <span className="divider">|</span>
           <span>Feedback</span>
           <span className="divider">|</span>
           <span>News Bulletin</span>

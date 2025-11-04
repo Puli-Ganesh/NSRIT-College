@@ -30,6 +30,11 @@ const MENU = [
   {
     label: "Academics",
     items: [
+      { label: "Outcome Based Education (OBE)", href: "#obe" },
+      { label: "Best Practices", href: "#best-practices" },
+      { label: "LMS", href: "#lms" },
+      { label: "Academic Calendar", href: "#calendar" },
+      { label: "Knowledge Resource Center (Library)", href: "#library" },
       {
         label: "Programs",
         href: "#programs",
@@ -44,7 +49,7 @@ const MENU = [
     ]
   },
   { label: "IIC", href: "#research" },
-  { label: "Accreditation, Ranking & Recognition", href: "#arr" },
+  { label: "Industry Connect & Collaborations", href: "#arr" },
   {
     label: "CDC",
     items: [
@@ -83,7 +88,7 @@ const MENU = [
       { label: "Clubs & Societies", href: "#clubs-societies" },
       { label: "Institution Policy Documents", href: "#policy-docs" },
       { label: "NSS", href: "#nss" },
-      { label: "Partner Institution", href: "#partner-institution" }
+      { label: "Contact", href: "#partner-institution" }
     ]
   }
 ];
@@ -97,12 +102,22 @@ export default function Navbar1() {
   const [accordionOpen, setAccordionOpen] = useState(null);
   const [panelPos, setPanelPos] = useState({ top: 0, left: 0 });
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [subOpen, setSubOpen] = useState({});
 
-  const placePanel = () => {
+  const itemHasSub = (item) => Array.isArray(item?.subitems) && item.subitems.length > 0;
+  const isDropdown = (m) => Array.isArray(m.items);
+  const menuHasSecondLevel = (idx) => (MENU[idx]?.items || []).some(itemHasSub);
+  const hoveredHasSub = () => {
+    if (openKey === null || !hoveredItem) return false;
+    const it = (MENU[openKey].items || []).find((t) => t.label === hoveredItem);
+    return itemHasSub(it);
+  };
+
+  const placePanel = (panelWidth) => {
     if (!anchorRef.current || !panelRef.current) return;
     const r = anchorRef.current.getBoundingClientRect();
-    const desired = { top: r.bottom + window.scrollY, left: r.left + window.scrollX };
-    const panelW = panelRef.current.offsetWidth || 320;
+    const desired = { top: r.bottom, left: r.left };
+    const panelW = panelWidth || panelRef.current.offsetWidth || 320;
     const vw = window.innerWidth;
     const pad = 8;
     const maxLeft = vw - panelW - pad;
@@ -165,14 +180,20 @@ export default function Navbar1() {
     }
   }, [openKey]);
 
-  const isDropdown = (m) => Array.isArray(m.items);
+  useEffect(() => {
+    if (openKey !== null) {
+      const width = hoveredHasSub() ? 560 : 320;
+      placePanel(width);
+    }
+  }, [hoveredItem]);
+
   const openFromTarget = (i, target) => {
     anchorRef.current = target;
     setOpenKey(i);
     setTimeout(placePanel, 0);
   };
-  const menuHasSecondLevel = (idx) =>
-    (MENU[idx]?.items || []).some((it) => Array.isArray(it.subitems));
+
+  const toggleSub = (label) => setSubOpen((p) => ({ ...p, [label]: !p[label] }));
 
   return (
     <div className="nav1" ref={navRef}>
@@ -211,52 +232,38 @@ export default function Navbar1() {
       {openKey !== null && MENU[openKey] && MENU[openKey].items && (
         <div
           ref={panelRef}
-          className="dropdown-panel"
+          className={`dropdown-panel ${menuHasSecondLevel(openKey) ? "supports-sub" : ""} ${hoveredHasSub() ? "show-sub" : ""}`}
           style={{ top: `${panelPos.top}px`, left: `${panelPos.left}px` }}
           onMouseEnter={() => setOpenKey(openKey)}
           onMouseLeave={() => { setOpenKey(null); setHoveredItem(null); }}
         >
           {menuHasSecondLevel(openKey) ? (
-            hoveredItem === null ? (
-              <div className="dropdown-grid">
+            <div className="dropdown-two-col">
+              <ul className="col-left">
                 {MENU[openKey].items.map((it) => (
-                  <a
-                    key={it.label}
-                    href={it.href}
-                    className="dropdown-item"
-                    onMouseEnter={() => setHoveredItem(it.label)}
-                  >
-                    {it.label}
-                  </a>
+                  <li key={it.label}>
+                    <a
+                      href={it.href}
+                      className={`dropdown-item ${hoveredItem === it.label ? "active" : ""}`}
+                      onMouseEnter={() => setHoveredItem(itemHasSub(it) ? it.label : null)}
+                    >
+                      <span>{it.label}</span>
+                      {itemHasSub(it) && <span className="dd-arrow">▸</span>}
+                    </a>
+                  </li>
                 ))}
-              </div>
-            ) : (
-              <div className="dropdown-two-col">
-                <ul className="col-left">
-                  {MENU[openKey].items.map((it) => (
-                    <li key={it.label}>
-                      <a
-                        href={it.href}
-                        className="dropdown-item"
-                        onMouseEnter={() => setHoveredItem(it.label)}
-                      >
-                        {it.label}
-                      </a>
-                    </li>
+              </ul>
+              <div className="col-right" aria-hidden={!hoveredHasSub()}>
+                {MENU[openKey].items
+                  .filter((it) => it.label === hoveredItem && itemHasSub(it))
+                  .flatMap((it) => it.subitems || [])
+                  .map((s) => (
+                    <a key={s.label} href={s.href} className="dropdown-item">
+                      {s.label}
+                    </a>
                   ))}
-                </ul>
-                <div className="col-right">
-                  {MENU[openKey].items
-                    .filter((it) => it.label === hoveredItem)
-                    .flatMap((it) => it.subitems || [])
-                    .map((s) => (
-                      <a key={s.label} href={s.href} className="dropdown-item">
-                        {s.label}
-                      </a>
-                    ))}
-                </div>
               </div>
-            )
+            </div>
           ) : (
             <div className="dropdown-grid">
               {MENU[openKey].items.map((it) => (
@@ -269,13 +276,13 @@ export default function Navbar1() {
         </div>
       )}
 
-      <div className="nav1-bottom">
+      {/*<div className="nav1-bottom">
         <div className="ticker">
           <div className="ticker__track">
-            Coming soon National Level Technical Fest - TechSurge 2025
+            Coming soon National Level Technical Fest - TechSurge 2025
           </div>
         </div>
-      </div>
+      </div> */}
 
       {drawer && (
         <div className="nav1-drawer">
@@ -297,17 +304,31 @@ export default function Navbar1() {
                   {accordionOpen === i && (
                     <div className="acc-body">
                       {m.items.map((it) =>
-                        it.subitems
-                          ? it.subitems.map((s) => (
-                              <a key={s.label} href={s.href} className="acc-link" onClick={() => setDrawer(false)}>
-                                {s.label}
-                              </a>
-                            ))
-                          : (
-                            <a key={it.label} href={it.href} className="acc-link" onClick={() => setDrawer(false)}>
-                              {it.label}
-                            </a>
-                          )
+                        itemHasSub(it) ? (
+                          <div key={it.label} className="acc-sub">
+                            <button
+                              className={`acc-head sub ${subOpen[it.label] ? "open" : ""}`}
+                              onClick={() => toggleSub(it.label)}
+                              aria-expanded={!!subOpen[it.label]}
+                            >
+                              <span>{it.label}</span>
+                              <span className="acc-arrow">{subOpen[it.label] ? "▴" : "▾"}</span>
+                            </button>
+                            {subOpen[it.label] && (
+                              <div className="acc-sub-body">
+                                {it.subitems.map((s) => (
+                                  <a key={s.label} href={s.href} className="acc-link" onClick={() => setDrawer(false)}>
+                                    {s.label}
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <a key={it.label} href={it.href} className="acc-link" onClick={() => setDrawer(false)}>
+                            {it.label}
+                          </a>
+                        )
                       )}
                     </div>
                   )}
