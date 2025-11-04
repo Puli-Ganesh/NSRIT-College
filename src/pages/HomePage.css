@@ -1,5 +1,5 @@
 .home {
-  min-height: 100vh;
+  min-height: auto;
   background: #f9fafb;
   color: #111827;
   display: flex;
@@ -8,16 +8,29 @@
 
 .banner {
   width: 100%;
-  height: auto;
-  overflow: hidden;
   margin-top: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
 .banner-img {
   width: 100%;
-  height: 500px;
+  height: auto;
   display: block;
   object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 1024px) {
+  .banner-img {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 640px) {
+  .banner-img {
+    height: 60vh;
+  }
 }
 
 
